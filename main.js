@@ -23,26 +23,9 @@ function execucao(pedido, resposta) {
     resposta.end(JSON.stringify(conteudo));
 }
 
-//funcao que vai ser executada sempre que houver 
-//alguma requisicao por parte do cliente
-function execucaoAsync(pedido, resposta) {
-    //definindo o tipo de conteudo da resposta, para json
-    resposta.setHeader('Content-Type', 'application/json');
-
-    function funcaoParaQuandoTerminarDeExecutar(conteudo) {
-        if (conteudo === "Error 404") {
-            resposta.writeHead(404);
-        }
-        //enviando o conteudo que tinha no router como resposta pro cliente
-        resposta.end(JSON.stringify(conteudo));
-    }
-
-    routerAsync(pedido, funcaoParaQuandoTerminarDeExecutar);
-}
-
 //criando o servidor e definindo a funcao que ficará 
 //sendo executada
-const server = http.createServer(execucaoAsync);
+const server = http.createServer(execucao);
 
 //subindo o servidor pra ficar escutando as requisições
 server.listen(port, host, () => {
